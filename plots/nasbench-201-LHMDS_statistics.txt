@@ -1,0 +1,6 @@
+R squared: 0.3760948624049378
+Kendal tau: SignificanceResult(statistic=0.5544084903728232, pvalue=0.0)
+Positions changed by log determinant higher estimate: 545.08
+Positions changed by log determinant lower estimate: 469.88
+Positions changed by log determinant higher estimate: 26.23
+Positions changed by log determinant lower estimate: 22.61

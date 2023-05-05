@@ -1,0 +1,9 @@
+absl_py==1.4.0
+matplotlib==3.7.0
+networkx==2.8.4
+numpy==1.24.2
+protobuf==3.19.6
+scikit_learn==1.2.1
+scipy==1.10.1
+tensorflow==2.11.0
+torch==1.13.1

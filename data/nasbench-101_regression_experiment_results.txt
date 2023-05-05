@@ -1,0 +1,3 @@
+Kendall Tau stats: [SignificanceResult(statistic=0.6675830269801859, pvalue=4.838609569403588e-91), SignificanceResult(statistic=0.4352859261522401, pvalue=9.829833384794216e-40), SignificanceResult(statistic=0.7743968531811213, pvalue=8.605981446736359e-122)]
+R2 scores: [0.9197073291638705, 0.5463533895210427, 0.9617386668266841]
+Methods: ['Polynomial Regression', 'SVR (RBF kernel)', 'Random Forest Regression']
