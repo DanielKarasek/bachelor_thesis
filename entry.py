@@ -77,26 +77,27 @@ def LHMDS_statistic_experiments_example():
   """
   This method loads sampled subspaces from nasbench-101 and nasbench-201 and
   performs all 3 experiments from the paper.
+
   This is rather slow and there are already precalculated results in the data folder.
-  So feel free to skip this method.
+  This might also throw error, since I changed some interfaces a tiny bit and didn't test it
+  (refactoring givith but refactoring also takeith).
   :return:
   """
+  # loading sampled nns and turning them into search spaces
   nas_101_sampled_NNs = (SearchSpaceSubsamplingInterface
                          .load_sampled_experiments("data/nasbench-101-subsample"))
   nas_201_sampled_NNs = (SearchSpaceSubsamplingInterface
                          .load_sampled_experiments("data/nasbench-201-subsample"))
-  # nas_201_sampled_NNs_variance = (SearchSpaceSubsamplingInterface
-  #                                 .load_sampled_experiments("data/variance_test_subsample"))
-  # nas_201_sampled_NNs_variance.save_sampled_experiments("data/variance_test_subsample")
-  # nas_101_sampled_NNs.save_sampled_experiments("data/nasbench-101-subsample")
-  # nas_201_sampled_NNs.save_sampled_experiments("data/nasbench-201-subsample")
+  nas_201_sampled_NNs_variance = (SearchSpaceSubsamplingInterface
+                                  .load_sampled_experiments("data/variance_test_subsample"))
+
   nas101_search_space = NASBench101Sampled(nas_101_sampled_NNs, NASBench201Model)
   nas201_search_space = NASBench101Sampled(nas_201_sampled_NNs, NASBench201Model)
 
-  # nas201_search_space_variance = NASBench101Sampled(nas_201_sampled_NNs_variance,
-  #                                                   NASBench201Model)
-
-  # run_nasbench_201_variance_experiment(nas201_search_space_variance)
+  nas201_search_space_variance = NASBench101Sampled(nas_201_sampled_NNs_variance,
+                                                    NASBench201Model)
+  # running experiments
+  run_nasbench_201_variance_experiment(nas201_search_space_variance)
   run_nas_without_training_experiment(nas101_search_space, "data/LHMDS-nasbench-101-experiments")
   run_nas_without_training_experiment(nas201_search_space, "data/LHMDS-nasbench-201-experiments")
 
@@ -106,7 +107,11 @@ def subsampling_example():
   This method subsamples nasbench-101 and nasbench-201 search spaces.
   NASbench-201 is super innefiecient and requieres over 20 GB ram
   (DAMN YOU RESEARCHERS WITH HIGH SPEC PCS)
-  This method doesnt have to be run since results are already in the data folder.
+
+  This method doesn't have to be run before other experiments.
+
+  !!!WARNING!!! This method doesn't generate subsamples for variance experiment since they
+  were only partially sampled by PC and then this subsampled search space was further subsampled by hand.
   :return:
   """
   subsample_nasbench_101("data/nasbench-101-subsample")
@@ -116,8 +121,9 @@ def subsampling_example():
 def show_lhmds_results():
   """
   This example shows how you can load the experiments and plot them.
-  There are more plotable experiments, so feel free to test plot functions
-  Its a bit of a cluster fuck now, (lot of titles and stuff are hardcoded)
+  There are more plotable experiments, so feel free to test plot functions.
+  Also analysers contain some statistical tests and stuff so also feel free to check them out.
+  Its a bit of a cluster fuck now, (lot of titles and numbers are hardcoded, but its getting better:))
   """
 
   experiments = NASStatisticExperimentData.load("data/LHMDS-nasbench-201-experiments", "nasbench-201-LHMDS")
