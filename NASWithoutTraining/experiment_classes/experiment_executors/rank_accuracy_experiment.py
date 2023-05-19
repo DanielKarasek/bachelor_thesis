@@ -1,7 +1,3 @@
-"""
-This module contains wrapper classes for experiments using LHMDS statistics.
-"""
-
 from __future__ import annotations
 
 import matplotlib.pyplot as plt  # type: ignore
@@ -15,6 +11,7 @@ from ..experiment_dataclass import NASStatisticExperimentData, StatisticNASSingl
 
 
 class StatisticsNasExperiment:
+  """Executor of the experiments that try to use lhmds to infer the rank and accuracy of given neural network"""
   def __init__(self, search_space, name=""):
     self.search_space = search_space
     self.experiments = NASStatisticExperimentData([], name)

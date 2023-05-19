@@ -1,7 +1,3 @@
-"""
-This module contains wrapper classes for experiments using LHMDS statistics.
-"""
-
 from __future__ import annotations
 
 import matplotlib.pyplot as plt  # type: ignore
@@ -13,6 +9,10 @@ from NASWithoutTraining.experiment_classes.experiment_dataclass import NASStatis
 
 
 class LHMDSAccuracyExperimentsAnalyser:
+  """
+  This class contains functionolaty to analyse the results of the experiments that tried to use LHMDS to predict
+  accuracy of the model and rank it amongst other NN models.
+  """
   experiment_data: NASStatisticExperimentData
 
   def __init__(self, experiment_data: NASStatisticExperimentData):

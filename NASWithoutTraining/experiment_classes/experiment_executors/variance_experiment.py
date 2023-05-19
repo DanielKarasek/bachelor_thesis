@@ -1,7 +1,3 @@
-"""
-This module contains wrapper classes for experiments using LHMDS statistics.
-"""
-
 from __future__ import annotations
 
 import matplotlib.pyplot as plt  # type: ignore
@@ -14,6 +10,10 @@ from NASWithoutTraining.experiment_classes.data_setup import setup_dataset
 
 
 class VarianceExperiment:
+  """
+  Executor of the experiment that compares variance lhmds based on different
+  initializations and different input data.
+  """
   def __init__(self, search_space):
     self.search_space = search_space
     self.different_init = NASStatisticExperimentData([], "different_init")

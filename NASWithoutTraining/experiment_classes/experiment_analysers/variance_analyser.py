@@ -1,7 +1,3 @@
-"""
-This module contains wrapper classes for experiments using LHMDS statistics.
-"""
-
 from __future__ import annotations
 
 from bisect import bisect
