@@ -47,6 +47,6 @@ to build KERAS models isomorphic to models described in nasbench papers.
 You have to change it manually in files, which are causing errors. (I am sorry about this, but we have to wait till all
 libraries update their dependencies)
 - Some examples in entry.py might not work perfectly (especially the long ones since I was unable to test them after 
-                                                      interface updates because of computation time)
-- During experiments keras throws some warnings, that suggest that I incorrectly built graph mode 
- (these warning shouldn't affect results, but might cause slower experiments).
+update of some interfaces since they are too  computationally expensive and I didn't have time for it yet)
+- During experiments, keras throws some warnings which suggest that I incorrectly built/called the graph in graph mode 
+ (these warnings shouldn't affect results, but might cause slower experiments).
