@@ -39,5 +39,14 @@ to build KERAS models isomorphic to models described in nasbench papers.
   - `entry.py` - main file, contains high level methods for running experiments
   - `feature_extraction.py` - contains methods for extracting features from nasbench networks for regression methods
   - `graph_ops.py` - methods for analysis of DAG created from cell structure
-  - `regression_experiments` - Experiments with regression methods (executor, analyser and dataclasses)
+  - `regression_experiments` - Experiments with regression methods (executor, analyser and dataclasses, this should be in separate folder)
   - `readme.md` - File with recursion in it (MUEHUEHUEHUEHEH 3:D)
+
+## Known buggs
+- During installation some numpy dependencies might still use np.\[type\], which included numpy version doesn't support
+You have to change it manually in files, which are causing errors. (I am sorry about this, but we have to wait till all
+libraries update their dependencies)
+- Some examples in entry.py might not work perfectly (especially the long ones since I was unable to test them after 
+                                                      interface updates because of computation time)
+- During experiments keras throws some warnings, that suggest that I incorrectly built graph mode 
+ (these warning shouldn't affect results, but might cause slower experiments).

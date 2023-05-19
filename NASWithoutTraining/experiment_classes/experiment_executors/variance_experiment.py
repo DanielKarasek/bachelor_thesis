@@ -16,11 +16,13 @@ from NASWithoutTraining.experiment_classes.data_setup import setup_dataset
 class VarianceExperiment:
   def __init__(self, search_space):
     self.search_space = search_space
-    self.experiments = NASStatisticExperimentData([], "variance_experiment")
+    self.different_init = NASStatisticExperimentData([], "different_init")
+    self.different_inp_data = NASStatisticExperimentData([], "different_inp_data")
     self.train_images = setup_dataset()[:, :, :, np.newaxis]
 
-  def save(self, path):
-    self.experiments.save(path)
+  def save(self, path: str):
+    self.different_init.save(path + "_different_init")
+    self.different_inp_data.save(path + "_different_inp_data")
 
   @staticmethod
   def load(path: str, name: str = "") -> VarianceExperiment:
@@ -55,7 +57,7 @@ class VarianceExperiment:
       model = self.setup_model(model_iterator)
       log_det, final_accuracy = self.get_results_from_model(model, model_iterator)
       experiment = StatisticNASSingleEntryResult(model_iterator, log_det, final_accuracy)
-      self.experiments.add_experiment(experiment)
+      self.different_init.add_experiment(experiment)
       print(f"Experiment number: {experiment_idx} with results:\n\t {experiment}")
 
   def different_train_images_experiment(self, experiment_idx, model_iterator):
@@ -64,5 +66,5 @@ class VarianceExperiment:
       log_det, final_accuracy = self.get_results_from_model(model, model_iterator,
                                                             self.train_images[i * 128:(i + 1) * 128])
       experiment = StatisticNASSingleEntryResult(model_iterator, log_det, final_accuracy)
-      self.experiments.add_experiment(experiment)
+      self.different_inp_data.add_experiment(experiment)
       print(f"Experiment number: {experiment_idx} with results:\n\t {experiment}")

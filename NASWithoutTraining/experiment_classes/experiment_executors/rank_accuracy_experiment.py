@@ -9,6 +9,7 @@ import numpy as np
 import tensorflow.keras as keras  # type: ignore
 
 from NASWithoutTraining.stat_decorator_model import StatDecoratorModel
+# todo: get rid of this abbomination
 from ..data_setup import setup_dataset
 from ..experiment_dataclass import NASStatisticExperimentData, StatisticNASSingleEntryResult
 
