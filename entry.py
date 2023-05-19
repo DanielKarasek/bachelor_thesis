@@ -1,20 +1,15 @@
 from __future__ import annotations
 
-import logging
-
-import tensorflow.python.keras as keras
-
-from NASWithoutTraining.stat_decorator_model import StatDecoratorModel
-from NASWithoutTraining.experiment import StatisticsNasExperiment, VarianceExperiment
+from NASWithoutTraining.experiment_classes.experiment_executors.rank_accuracy_experiment import StatisticsNasExperiment
+from NASWithoutTraining.experiment_classes.experiment_executors.variance_experiment import VarianceExperiment
+from NASWithoutTraining.experiment_classes.experiment_analysers.rank_accuracy_analyser import LHMDSAccuracyExperimentsAnalyser
+from NASWithoutTraining.experiment_classes.experiment_analysers.variance_analyser import LHMDSStochasticityExperimentsAnalyser
+from NASWithoutTraining.experiment_classes.experiment_dataclass import NASStatisticExperimentData
 from nas_searchspaces.subsampling_interface import SearchSpaceSubsamplingInterface
-from nasbench.constants import Operations
 from nasbench.model_builder import NASModel, NASBench201Model
-from nasbench.model_spec import ModelSpec
 from nas_searchspaces.nassearchspace import NASBench101, NASBench101Sampled, NASBench201
 from feature_extractor import FeatureExtractor
 from regression_experiments import RegressionExperimentator
-
-from nasbench.nasbench201.nasbench_201_api import NASBench201API
 
 
 def subsample_nasbench_101(save_path: str):
@@ -43,8 +38,7 @@ def extract_featerus_from_nasbench_101(path_to_save: str = "", subsampled_path: 
   if not path_to_save:
     path_to_save = "data/features_from_nasbench_101.npz"
   search_space = NASBench101Sampled(SearchSpaceSubsamplingInterface
-                                    .load(subsampled_path)
-                                    .sampled_experiments, NASModel)
+                                    .load(subsampled_path), NASModel)
   extract_features_from_search_space(search_space, path_to_save)
 
 
@@ -54,12 +48,11 @@ def extract_featerus_from_nasbench_201(path_to_save: str = "", subsampled_path: 
   if not path_to_save:
     path_to_save = "data/features_from_nasbench_201.npz"
   search_space = NASBench101Sampled(SearchSpaceSubsamplingInterface
-                                    .load(subsampled_path)
-                                    .sampled_experiments, NASBench201Model)
+                                    .load(subsampled_path), NASBench201Model)
   extract_features_from_search_space(search_space, path_to_save)
 
 
-def run_nas_without_training_experiment(search_space, output_file:str = ""):
+def run_nas_without_training_experiment(search_space, output_file: str = ""):
   experiment_wrapper = StatisticsNasExperiment(search_space)
   experiment_wrapper.run_experiment()
   if not output_file:
@@ -92,18 +85,18 @@ def LHMDS_statistic_experiments_example():
                          .load_sampled_experiments("data/nasbench-101-subsample"))
   nas_201_sampled_NNs = (SearchSpaceSubsamplingInterface
                          .load_sampled_experiments("data/nasbench-201-subsample"))
-  nas_201_sampled_NNs_variance = (SearchSpaceSubsamplingInterface
-                                  .load_sampled_experiments("data/variance_test_subsample"))
+  # nas_201_sampled_NNs_variance = (SearchSpaceSubsamplingInterface
+  #                                 .load_sampled_experiments("data/variance_test_subsample"))
   # nas_201_sampled_NNs_variance.save_sampled_experiments("data/variance_test_subsample")
   # nas_101_sampled_NNs.save_sampled_experiments("data/nasbench-101-subsample")
   # nas_201_sampled_NNs.save_sampled_experiments("data/nasbench-201-subsample")
   nas101_search_space = NASBench101Sampled(nas_101_sampled_NNs, NASBench201Model)
   nas201_search_space = NASBench101Sampled(nas_201_sampled_NNs, NASBench201Model)
 
-  nas201_search_space_variance = NASBench101Sampled(nas_201_sampled_NNs_variance,
-                                                    NASBench201Model)
+  # nas201_search_space_variance = NASBench101Sampled(nas_201_sampled_NNs_variance,
+  #                                                   NASBench201Model)
 
-  run_nasbench_201_variance_experiment(nas201_search_space_variance)
+  # run_nasbench_201_variance_experiment(nas201_search_space_variance)
   run_nas_without_training_experiment(nas101_search_space, "data/LHMDS-nasbench-101-experiments")
   run_nas_without_training_experiment(nas201_search_space, "data/LHMDS-nasbench-201-experiments")
 
@@ -127,10 +120,14 @@ def show_lhmds_results():
   Its a bit of a cluster fuck now, (lot of titles and stuff are hardcoded)
   """
 
-  experiments = StatisticsNasExperiment.load("data/LHMDS-nasbench-101-experiments", "nasbench-201-LHMDS")
-  experiments.experiments.plot_infered_accuracies()
-  experiments = VarianceExperiment.load("data/variance_experiment_nasbench_201")
-  experiments.experiments.boxplot()
+  experiments = NASStatisticExperimentData.load("data/LHMDS-nasbench-201-experiments", "nasbench-201-LHMDS")
+
+  analyser = LHMDSAccuracyExperimentsAnalyser(experiments)
+  analyser.plot_inferred_accuracies_with_stats()
+
+  experiments = NASStatisticExperimentData.load("data/nas201_different_inits.pickle")
+  analyser = LHMDSStochasticityExperimentsAnalyser(experiments)
+  analyser.boxplot_lhmds("Effect of different initializations", "different_initialization_nasbench_201")
 
 
 def extract_features_and_run_regressors():
@@ -151,10 +148,8 @@ def extract_features_and_run_regressors():
 def main():
   # subsampling_example()
   # LHMDS_statistic_experiments_example()
-  # show_lhmds_results()
+  show_lhmds_results()
   # extract_features_and_run_regressors()
-
-
 
 
 if __name__ == "__main__":
