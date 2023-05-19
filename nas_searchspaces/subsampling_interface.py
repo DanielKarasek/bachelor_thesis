@@ -3,7 +3,7 @@ from __future__ import annotations
 import pickle
 import numpy as np
 
-from nas_searchspaces.nassearchspace import (NASBench101)
+from nas_searchspaces.nassearchspaces import (NASBench101)
 from nasbench.model_spec import ModelSpec
 
 class SearchSpaceSubsamplingInterface:

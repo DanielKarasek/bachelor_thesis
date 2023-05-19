@@ -7,7 +7,7 @@ from NASWithoutTraining.experiment_classes.experiment_analysers.variance_analyse
 from NASWithoutTraining.experiment_classes.experiment_dataclass import NASStatisticExperimentData
 from nas_searchspaces.subsampling_interface import SearchSpaceSubsamplingInterface
 from nasbench.model_builder import NASModel, NASBench201Model
-from nas_searchspaces.nassearchspace import NASBench101, NASBench101Sampled, NASBench201
+from nas_searchspaces.nassearchspaces import NASBench101, NASBench101Sampled, NASBench201
 from feature_extractor import FeatureExtractor
 from regression_experiments import RegressionExperimentator
 
