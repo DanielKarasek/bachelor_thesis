@@ -60,8 +60,8 @@ class RegressionExperimentator:
     self.methods = [LinearRegression,
                     SVR,
                     RandomForestRegressor]
-    self.methods_names = ["Linear Regression",
-                          "SVR",
+    self.methods_names = ["Polynomial Regression",
+                          "SVR (RBF kernel)",
                           "Random Forest Regression"]
     self.results = RegressionExperimentResults()
 
@@ -88,10 +88,22 @@ class RegressionExperimentator:
     plt.scatter(np.hstack([self.y_test, self.y_train]), y_pred)
     plt.xlim(0.5, 1)
     plt.ylim(0.5, 1)
-    plt.title(name)
-    plt.xlabel("true accuracies")
-    plt.ylabel("predicted accuracies")
-    plt.savefig(f"regressor_{name}.png")
+    plt.title(f"{name}", fontsize=20)
+    plt.xlabel("True accuracy", fontsize=16)
+    plt.ylabel("Predicted accuracy", fontsize=16)
+    plt.xticks(fontsize=12)
+    plt.yticks(fontsize=12)
+
+    from matplotlib import patches
+
+    r_squared = r2
+    kendal_tau = kendall_tau.statistic
+    r_squared_text = f"R squared: {r_squared:.3f}"
+    kendal_tau_text = f"Kendall tau: {kendal_tau:.3f}"
+    circle = patches.Circle((0.5, 0.5), 0.01, linewidth=1, edgecolor='white', facecolor='white')
+    plt.legend([circle, circle],[r_squared_text, kendal_tau_text], loc="lower right", shadow=True, fontsize=16)
+    plt.savefig(f"plots/nasbench-101-regressor_{name}.png")
+
     plt.show()
     return kendall_tau, r2
 

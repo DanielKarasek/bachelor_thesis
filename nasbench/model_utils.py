@@ -100,6 +100,11 @@ class Downsample(keras.Model, ABC):
 class BasicResBlock(keras.Model, ABC):
   def __init__(self, channels, stride=2):
     super(BasicResBlock, self).__init__()
+<<<<<<< HEAD
+=======
+    if isinstance(stride, tuple):
+      stride = stride[0]
+>>>>>>> 9065cc3cb3fc80a960d72274d2dc4fc463996d31
     self.conv1 = Conv3x3BnRelu(channels, stride)
     self.conv2 = Conv3x3BnRelu(channels)
     self.residual = Projection(channels)
@@ -138,4 +143,8 @@ operation2layer = {Operations.CONV1X1.value: Conv1x1BnRelu,
                    Operations.CONV3X3.value: Conv3x3BnRelu,
                    Operations.MAXPOOL3X3.value: MaxPool3x3,
                    Operations.AVGPOOl3X3.value: AvgPool3x3,
+<<<<<<< HEAD
                    Operations.SKIP: Identity}
+=======
+                   Operations.SKIP.value: Identity}
+>>>>>>> 9065cc3cb3fc80a960d72274d2dc4fc463996d31

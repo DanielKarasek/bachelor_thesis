@@ -3,7 +3,11 @@ from __future__ import annotations
 import pickle
 import numpy as np
 
+<<<<<<< HEAD
 from nas_searchspaces.nassearchspace import (NASBench101)
+=======
+from nas_searchspaces.nassearchspaces import (NASBench101)
+>>>>>>> 9065cc3cb3fc80a960d72274d2dc4fc463996d31
 from nasbench.model_spec import ModelSpec
 
 class SearchSpaceSubsamplingInterface:
@@ -25,11 +29,21 @@ class SearchSpaceSubsamplingInterface:
 
   def fill_bins(self) -> None:
     for unique_hash in self.searchspace:
+<<<<<<< HEAD
       final_accuracy = self.searchspace.get_final_accuracy(unique_hash)
       model_spec: ModelSpec = self.searchspace.get_spec(unique_hash)
       bin_idx = self.find_bin_idx(final_accuracy)
       self.binned_hashes[bin_idx].append([unique_hash, final_accuracy, model_spec.matrix, model_spec.ops])
 
+=======
+      try:
+        final_accuracy = self.searchspace.get_final_accuracy(unique_hash)
+        model_spec: ModelSpec = self.searchspace.get_spec(unique_hash)
+        bin_idx = self.find_bin_idx(final_accuracy)
+        self.binned_hashes[bin_idx].append([unique_hash, final_accuracy, model_spec.matrix, model_spec.ops])
+      except ValueError as e:
+        print(e.__str__())
+>>>>>>> 9065cc3cb3fc80a960d72274d2dc4fc463996d31
   def subsamble_space(self, total_samples: int = 1000):
     percentages = np.array([0.02, 0.03, 0.04, 0.05, 0.06,
                             0.07, 0.08, 0.11, 0.11, 0.12,
