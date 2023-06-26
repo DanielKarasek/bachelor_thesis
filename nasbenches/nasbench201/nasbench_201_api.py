@@ -19,8 +19,8 @@ from typing import List, Text, Tuple, Dict, Optional
 import numpy as np
 import torch
 
-from nasbench.nasbench201.api_utils import ArchResults
-from nasbench.nasbench201.api_utils import NASBenchMetaAPI
+from nasbenches.nasbench201.api_utils import ArchResults
+from nasbenches.nasbench201.api_utils import NASBenchMetaAPI
 
 ALL_BENCHMARK_FILES = ['NASBENCH_201_data.pth', 'NAS-Bench-201-v1_1-096897.pth']
 ALL_ARCHIVE_DIRS = ['NAS-Bench-201-v1_1-archive']
@@ -242,11 +242,7 @@ class NASBench201API(NASBenchMetaAPI):
     adjacency_mat, ops = self.str2matrix_and_ops(archresult.arch_str)
     xinfo['adjacency_matrix'] = adjacency_mat
     xinfo['operations'] = ops
-<<<<<<< HEAD
-    return xinfo
-=======
     return adjacency_mat, ops, xinfo
->>>>>>> 9065cc3cb3fc80a960d72274d2dc4fc463996d31
 
   def show(self, index: int = -1) -> None:
     """This function will print the information of a specific (or all) architecture(s)."""
@@ -346,15 +342,12 @@ class NASBench201API(NASBenchMetaAPI):
                                   [0, 0, 0, 0, 0, 0, 0, 1],  # cop1
                                   [0, 0, 0, 0, 0, 0, 0, 0],  # output
                                   ])
-<<<<<<< HEAD
-=======
     for orig, replace in [("skip_connect", "skip"),
                           ("avg_pool_3x3", "avgpool3x3"),
                           ("nor_conv_1x1", "conv1x1-bn-relu"),
                           ("nor_conv_3x3", "conv3x3-bn-relu")]:
       ops = [op.replace(orig, replace) for op in ops]
     ops[2], ops[3] = ops[3], ops[2]
->>>>>>> 9065cc3cb3fc80a960d72274d2dc4fc463996d31
     ops.insert(0, 'input')
     ops.append('output')
     for idx, op in enumerate(ops):

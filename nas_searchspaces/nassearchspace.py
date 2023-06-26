@@ -1,13 +1,13 @@
-from nasbench.nasbench101.nasbench_101_api import NASBench
-from nasbench.model_spec import ModelSpec
-from nasbench.model_builder import NASModel, NASBench201Model
+from nasbenches.nasbench101.nasbench_101_api import NASBench
+from nasbenches.model_spec import ModelSpec
+from nasbenches.model_builder import NASModel, NASBench201Model
 
-from nasbench.nasbench201.nasbench_201_api import NASBench201API
+from nasbenches.nasbench201.nasbench_201_api import NASBench201API
 import tensorflow.python.keras as keras
 
 
 class NASBench201:
-  def __init__(self, tfrecord_location: str = "./nasbench/nasbench201/nasbench_full.tfrecord"):
+  def __init__(self, tfrecord_location: str = "./nasbenches/nasbench201/nasbench_full.tfrecord"):
     self.nas = NASBench201API(tfrecord_location)
 
   def get_spec(self, idx: int) -> ModelSpec:
@@ -28,7 +28,7 @@ class NASBench201:
 
 
 class NASBench101:
-  def __init__(self, tfrecord_location: str = "./nasbench/nasbench101/nasbench_only108.tfrecord"):
+  def __init__(self, tfrecord_location: str = "./nasbenches/nasbench101/nasbench_only108.tfrecord"):
     self.nas = NASBench(tfrecord_location, 1000)
 
   def get_spec(self, unique_hash: str) -> ModelSpec:

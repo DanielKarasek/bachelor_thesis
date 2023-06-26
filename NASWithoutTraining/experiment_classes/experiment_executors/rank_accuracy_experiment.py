@@ -35,7 +35,8 @@ class StatisticsNasExperiment:
       H_k = model.predict(self.train_images, batch_size=128)
       _, log_det = np.linalg.slogdet(H_k)
       final_accuracy = self.search_space.get_final_accuracy(model_iterator)
-      experiment = StatisticNASSingleEntryResult(model_iterator, log_det, final_accuracy)
+      experiment = StatisticNASSingleEntryResult(model_iterator, log_det, final_accuracy, experiment_idx)  # running experiments
+
       self.experiments.add_experiment(experiment)
       print(f"Experiment number: {experiment_idx} with results:\n\t {experiment}")
 

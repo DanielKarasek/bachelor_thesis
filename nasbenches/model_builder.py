@@ -3,12 +3,12 @@ from abc import ABC
 import numpy as np
 import tensorflow.keras as keras
 import tensorflow as tf
-from nasbench.model_spec import ModelSpec
-from nasbench.model_utils import (
+from nasbenches.model_spec import ModelSpec
+from nasbenches.model_utils import (
   BNConvLayer, operation2layer, Truncate, Projection,
   Conv3x3BnRelu, Conv1x1BnRelu, Identity, Downsample, BasicResBlock)
 
-from nasbench.constants import (
+from nasbenches.constants import (
   Constants, NASBENCH201Constants, NASBENCH101Constants)
 
 
@@ -234,20 +234,12 @@ class NASBench201Model(keras.Model, ABC):
                                  False,
                                  module_count=NASBENCH201Constants.modules_in_stack))
       if stack_num < NASBENCH201Constants.stack_count - 1:
-<<<<<<< HEAD
-        self.residual.append(BasicResBlock(channels, stride=(2, 2)))
-=======
         self.skeleton.append(BasicResBlock(channels, stride=(2, 2)))
->>>>>>> 9065cc3cb3fc80a960d72274d2dc4fc463996d31
 
     self.global_average = keras.layers.GlobalAveragePooling2D(data_format=Constants.data_format)
     self.logits = keras.layers.Dense(Constants.label_count)
 
-<<<<<<< HEAD
-  def __call__(self, inputs, training, mask):
-=======
   def __call__(self, inputs, training=False, mask=False):
->>>>>>> 9065cc3cb3fc80a960d72274d2dc4fc463996d31
     with tf.name_scope('Stem'):
       x = self.stem(inputs, training, mask)
     for stack_idx, module in enumerate(self.skeleton):

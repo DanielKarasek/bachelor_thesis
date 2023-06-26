@@ -1,2 +1,4 @@
 *.pth
 *.tfrecord
+*__pycache__*
+plots*

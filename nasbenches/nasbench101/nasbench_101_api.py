@@ -18,7 +18,7 @@ Before using this API, download the data files from the links in the README.
 
 Usage:
   # Load the data from file (this will take some time)
-  nasbench = api.NASBench('/path/to/nasbench.tfrecord')
+  nasbenches = api.NASBench('/path/to/nasbenches.tfrecord')
 
   # Create an Inception-like module (5x5 convolution replaced with two 3x3
   # convolutions).
@@ -36,7 +36,7 @@ Usage:
 
 
   # Query this model from dataset
-  data = nasbench.query(model_spec)
+  data = nasbenches.query(model_spec)
 
 Adjacency matrices are expected to be upper-triangular 0-1 matrices within the
 defined search space (7 vertices, 9 edges, 3 allowed ops). The first and last
@@ -63,7 +63,7 @@ The returned data object is a dictionary with the following keys:
 Instead of querying the dataset for a single run of a model, it is also possible
 to retrieve all metrics for a given spec, using:
 
-  fixed_stats, computed_stats = nasbench.get_metrics_from_spec(model_spec)
+  fixed_stats, computed_stats = nasbenches.get_metrics_from_spec(model_spec)
 
 The fixed_stats is a dictionary with the keys:
   - module_adjacency
@@ -94,7 +94,7 @@ import os
 import random
 import time
 
-from nasbench.nasbench101 import config, model_metrics_pb2
+from nasbenches.nasbench101 import config, model_metrics_pb2
 import numpy as np
 import tensorflow as tf
 

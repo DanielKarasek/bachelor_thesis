@@ -3,8 +3,8 @@ from typing import List
 import numpy as np
 
 import graph_ops
-from nasbench.constants import Operations
-from nasbench.model_spec import ModelSpec
+from nasbenches.constants import Operations
+from nasbenches.model_spec import ModelSpec
 
 
 class FeatureExtractor:
